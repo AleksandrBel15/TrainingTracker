@@ -1,0 +1,47 @@
+.training-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 16px 20px;
+  margin-bottom: 14px;
+
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.training-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.training-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.training-date {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.delete-button {
+  border: none;
+  background-color: #ef4444;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  background-color: #dc2626;
+}

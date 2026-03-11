@@ -43,7 +43,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background-color: #111827;
+  background-color: #2563eb;
   color: white;
   font-weight: 600;
   cursor: pointer;
@@ -51,7 +51,7 @@
 }
 
 .training-form button:hover {
-  background-color: #1f2937;
+  background-color: #1d4ed8;
 }
 
 .warning {
@@ -59,3 +59,4 @@
   border-color: red;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
 }
+

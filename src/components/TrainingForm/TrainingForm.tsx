@@ -1,14 +1,17 @@
 import { type TrainingInput, type TrainingFormProps } from "../../types.ts";
-import { validateTraining, type TrainingErrors } from "../../utils/validateTraining.ts";
+import {
+  validateTraining,
+  type TrainingErrors,
+} from "../../utils/validateTraining.ts";
 import "./TrainingForm.css";
 import { useState } from "react";
 
 function Form(props: TrainingFormProps) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [duration, setDuration] = useState("");
-  const [health, setHealth] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [duration, setDuration] = useState<string>("");
+  const [health, setHealth] = useState<string>("");
 
   const [errors, setErrors] = useState<TrainingErrors>({});
 
@@ -98,7 +101,7 @@ function Form(props: TrainingFormProps) {
           <option value="5">5</option>
         </select>
         <button type="submit" className="submit-button primary-button">
-          Отправить
+          <span>Отправить</span>
         </button>
       </form>
     </div>

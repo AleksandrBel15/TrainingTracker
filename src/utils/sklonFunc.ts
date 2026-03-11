@@ -1,7 +1,7 @@
 export const sklon = (num: number): string => {
     const lastNum = num % 100;
 
-    if (num >= 11 && num <= 14) return "часов";
+    if (lastNum >= 11 && lastNum <= 14) return "часов";
 
     switch (lastNum) {
       case 1:

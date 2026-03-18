@@ -1,0 +1,9 @@
+.page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* 2 колонки одинаковой ширины */
+  grid-template-rows: 1fr 1fr;      /* 2 строки одинаковой высоты */
+  gap: 20px;                        /* расстояние между карточками */
+  height: 100vh;                    /* контейнер занимает весь экран */
+  padding: 20px;
+  box-sizing: border-box;
+}

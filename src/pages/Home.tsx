@@ -3,48 +3,34 @@ import Modal from "../components/Modal/Modal";
 import Form from "../components/TrainingForm/TrainingForm";
 import List from "../components/TrainingList/TrainingList";
 import type { Training, TrainingInput } from "../types";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../store/store";
+import {
+  addTraining,
+  removeTraining,
+  updateTraining,
+} from "../store/trainings.slice";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
 
 export function Home() {
   const STORAGE_KEY = "trainings";
 
-  const [trainings, setTrainings] = useState<Training[]>(() => {
-    if (localStorage.getItem(STORAGE_KEY)) {
-      const data = localStorage.getItem(STORAGE_KEY);
-      if (typeof data === "string") {
-        return JSON.parse(data);
-      }
-    } else {
-      return [];
-    }
-  });
+  const trainings = useSelector((state: RootState) => state.training.trainings);
+  const dispatch = useDispatch<AppDispatch>();
 
   const onUpdate = (updated: Training): void => {
-    setTrainings((prev) =>
-      prev.map((el) => (el.id === updated.id ? updated : el)),
-    );
+    dispatch(updateTraining(updated));
   };
 
-  const [selectedTrainingId, setSelectedTrainingId] = useState<number | null>(
-    null,
-  );
+  const [selectedTrainingId, setSelectedTrainingId] = useState<number | null>(null);
 
-  const addTraining = (data: TrainingInput): void => {
-    const train: Training = {
-      id: Date.now(),
-      done: false,
-      ...data,
-    };
-
-    setTrainings((prev) => [...prev, train]);
+  const onAddTraining = (data: TrainingInput) => {
+    dispatch(addTraining(data));
   };
 
   const deleteTraining = (id: number): void => {
-    const filterTrainings = trainings.filter((el) => {
-      if (el.id !== id) {
-        return el;
-      }
-    });
-    setTrainings(filterTrainings);
+    dispatch(removeTraining(id));
   };
 
   useEffect(() => {
@@ -57,7 +43,7 @@ export function Home() {
 
   const onClose = useCallback(() => {
     setSelectedTrainingId(null);
-  }, []);
+  }, [setSelectedTrainingId]);
 
   const selectedTraining =
     selectedTrainingId !== null
@@ -67,7 +53,7 @@ export function Home() {
   return (
     <>
       <div className="layout">
-        <Form addTraining={addTraining} />
+        <Form addTraining={onAddTraining} />
 
         <List
           trainings={trainings}

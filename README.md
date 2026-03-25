@@ -32,8 +32,8 @@
 1. Клонируйте репозиторий:
 
 ```bash
-git clone <your-repo-url>
-cd <repo-folder>
+git clone https://github.com/AleksandrBel15/TrainingTracker
+cd TrainingTracker
 ```
 
 2. Установите зависимости:

@@ -1,0 +1,19 @@
+.container-square {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 4px;
+}
+
+.square {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.square-gray {
+  background-color: rgb(230, 230, 230);
+}
+
+.square-blue {
+  background-color: #3b82f6;
+}

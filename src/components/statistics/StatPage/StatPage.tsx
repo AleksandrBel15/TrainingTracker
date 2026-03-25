@@ -3,7 +3,7 @@ import { StatCard } from '../StatCard/StatCard.tsx';
 import { TrainingCount } from '../TrainingCount/TrainingCount.tsx';
 import { Streak } from '../Streak/Streak.tsx';
 import { TrainingGraph } from '../TrainingGraph/TrainingGraph.tsx';
-import { Progress } from '../Progress/Progress.tsx';
+import { HeatMap } from '../HeatMap/HeatMap.tsx';
 
 
 export function StatPage() {
@@ -15,7 +15,7 @@ export function StatPage() {
             <Streak />
         </StatCard>
         <StatCard title='Активность'>
-            <Progress />
+            <HeatMap />
         </StatCard>
         <StatCard title='График тренировок'>
             <TrainingGraph />

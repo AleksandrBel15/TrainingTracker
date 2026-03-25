@@ -15,8 +15,4 @@ export function App() {
   );
 }
 
-/**
- * Фильтр
- * Статистика
- * useLocalStorage
- */
+

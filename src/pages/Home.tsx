@@ -50,13 +50,15 @@ export function Home() {
       ? trainings.find((el) => el.id === selectedTrainingId)
       : undefined;
 
+  const trainingsSorted = [...trainings].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   return (
     <>
       <div className="layout">
         <Form addTraining={onAddTraining} />
 
         <List
-          trainings={trainings}
+          trainings={trainingsSorted}
           deleteTraining={deleteTraining}
           onSelect={onSelect}
         />

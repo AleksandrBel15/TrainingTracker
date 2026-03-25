@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ModalProps } from "../../types";
 import "./Modal.css";
 import ModalView from "./ModalView";
@@ -25,10 +25,15 @@ function Modal({ training, onClose, onUpdate }: ModalProps) {
 
     document.addEventListener("keydown", handler);
 
-    return () => {
-      document.removeEventListener("keydown", handler);
-    };
+    return () => document.removeEventListener("keydown", handler);
+
   }, [onClose]);
+
+  const handleSetEditing = useCallback(() => setIsEditing(true), []);
+  const handleCancelEditing = useCallback(() => setIsEditing(false), []);
+  const handleSave = useCallback((updatedTraining: typeof training) => {
+    onUpdate(updatedTraining);
+  }, [onUpdate]);
 
   return (
     <div className="overlay" onClick={onClose}>
@@ -37,14 +42,14 @@ function Modal({ training, onClose, onUpdate }: ModalProps) {
           {isEditing ? (
             <ModalEdit
               training={training}
-              onCancel={() => setIsEditing(false)}
-              onSave={onUpdate}
+              onCancel={handleCancelEditing}
+              onSave={handleSave}
               sklon={sklon}
             />
           ) : (
             <ModalView
               training={training}
-              setIsEditing={() => setIsEditing(true)}
+              setIsEditing={handleSetEditing}
               sklon={sklon}
             />
           )}

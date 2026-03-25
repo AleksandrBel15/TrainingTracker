@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import type { ModalEditProps, Training } from "../../types";
 import "./Modal.css";
 
@@ -85,4 +85,4 @@ function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
   );
 }
 
-export default ModalEdit;
+export default React.memo(ModalEdit);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Modal from "../components/Modal/Modal";
 import Form from "../components/TrainingForm/TrainingForm";
 import List from "../components/TrainingList/TrainingList";
@@ -23,34 +23,49 @@ export function Home() {
     dispatch(updateTraining(updated));
   };
 
-  const [selectedTrainingId, setSelectedTrainingId] = useState<number | null>(null);
+  const [selectedTrainingId, setSelectedTrainingId] = useState<number | null>(
+    null,
+  );
 
   const onAddTraining = (data: TrainingInput) => {
     dispatch(addTraining(data));
   };
 
-  const deleteTraining = (id: number): void => {
+  const deleteTraining = useCallback((id: number): void => {
     dispatch(removeTraining(id));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(trainings));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(trainings));
+    } catch (e) {
+      console.error("Ошибка сохранения в localStorage", e);
+    }
   }, [trainings]);
 
-  const onSelect = (id: number): void => {
+  const onSelect = useCallback((id: number): void => {
     setSelectedTrainingId(id);
-  };
+  }, []);
 
   const onClose = useCallback(() => {
     setSelectedTrainingId(null);
   }, [setSelectedTrainingId]);
 
-  const selectedTraining =
-    selectedTrainingId !== null
-      ? trainings.find((el) => el.id === selectedTrainingId)
-      : undefined;
+  const selectedTraining = useMemo(
+    () =>
+      selectedTrainingId !== null
+        ? trainings.find((el) => el.id === selectedTrainingId)
+        : undefined,
+    [trainings, selectedTrainingId],
+  );
 
-  const trainingsSorted = [...trainings].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const trainingsSorted = useMemo(
+    () =>
+      [...trainings].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      ),
+    [trainings],
+  );
 
   return (
     <>

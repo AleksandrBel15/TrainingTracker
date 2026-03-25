@@ -1,3 +1,4 @@
+import React from "react";
 import type { TrainingListProps } from "../../types";
 import './TrainingList.css';
 import Item from "../TrainingItem/TrainingItem";
@@ -8,7 +9,7 @@ function List({ trainings, deleteTraining, onSelect }: TrainingListProps) {
       <h2>Список тренировок</h2>
 
       <div>
-        {trainings.length < 0
+        {trainings.length === 0
           ? "Пора тренироваться..."
           : trainings.map((training) => (
               <Item
@@ -23,4 +24,4 @@ function List({ trainings, deleteTraining, onSelect }: TrainingListProps) {
   );
 }
 
-export default List;
+export default React.memo(List);

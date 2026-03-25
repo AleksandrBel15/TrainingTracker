@@ -7,33 +7,24 @@ export function buildHeatmapData(
   trainings: { date: string }[],
   daysCount: number = 120
 ): HeatmapDay[] {
-  const countMap: Map<string, number> = new Map();
+  const countMap = new Map<string, number>();
 
-  for (const el of trainings) {
-    const date = new Date(el.date);
+  trainings.forEach(({ date }) => {
+    const dayKey = new Date(date).toISOString().slice(0, 10);
+    countMap.set(dayKey, (countMap.get(dayKey) || 0) + 1);
+  });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return Array.from({ length: daysCount }, (_, i) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (daysCount - 1 - i));
     const dayKey = date.toISOString().slice(0, 10);
 
-    if (countMap.has(dayKey)) {
-      countMap.set(dayKey, countMap.get(dayKey)! + 1);
-    } else {
-      countMap.set(dayKey, 1);
-    }
-  }
-
-  const result: HeatmapDay[] = [];
-
-  for (let i = daysCount - 1; i >= 0; i--) {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - i);
-
-    const dayKey = date.toISOString().slice(0, 10);
-
-    result.push({
+    return {
       date: dayKey,
       count: countMap.get(dayKey) || 0,
-    });
-  }
-
-  return result;
+    };
+  });
 }

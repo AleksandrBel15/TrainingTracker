@@ -8,23 +8,13 @@ export type TrainingErrors = {
 };
 
 export const validateTraining = (data: TrainingInput): TrainingErrors => {
-    const errors: TrainingErrors = {};
+  const { title, description, duration, health } = data;
+  const errors: TrainingErrors = {};
 
-    if (!data.title.trim()) {
-        errors.title = true;
-    }
+  if (!title.trim()) errors.title = true;
+  if (!description.trim()) errors.description = true;
+  if (isNaN(duration) || duration <= 0) errors.duration = true;
+  if (health < 1 || health > 5) errors.health = true;
 
-    if (!data.description.trim()) {
-        errors.description = true;
-    }
-
-    if (isNaN(data.duration) || data.duration <= 0) {
-        errors.duration = true;
-    }
-
-    if (data.health < 1 || data.health > 5) {
-        errors.health = true;
-    }
-
-    return errors;
+  return errors;
 };

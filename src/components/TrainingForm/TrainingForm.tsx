@@ -1,104 +1,115 @@
-import { type TrainingInput, type TrainingFormProps } from "../../types.ts";
+import { useState, useCallback } from "react";
+import type { TrainingInput, TrainingFormProps } from "../../types.ts";
 import {
   validateTraining,
   type TrainingErrors,
 } from "../../utils/validateTraining.ts";
 import "./TrainingForm.css";
-import { useState } from "react";
 
-function Form(props: TrainingFormProps) {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const [duration, setDuration] = useState<string>("");
-  const [health, setHealth] = useState<string>("");
+function Form({ addTraining }: TrainingFormProps) {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    date: "",
+    duration: "",
+    health: "",
+  });
 
   const [errors, setErrors] = useState<TrainingErrors>({});
 
-  const cleanInputs = () => {
-    setTitle("");
-    setDescription("");
-    setDate("");
-    setDuration("");
-    setHealth("");
-  };
+  const handleChange = useCallback(
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >,
+    ) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    },
+    [],
+  );
 
-  const onHandleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    const data: TrainingInput = {
-      title,
-      description,
-      date,
-      duration: Number(duration),
-      health: Number(health),
-    };
-
-    const validationErrors = validateTraining(data);
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    props.addTraining(data);
-    cleanInputs();
+  const cleanInputs = useCallback(() => {
+    setFormData({
+      title: "",
+      description: "",
+      date: "",
+      duration: "",
+      health: "",
+    });
     setErrors({});
-  };
+  }, []);
+
+  const onHandleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const data: TrainingInput = {
+        ...formData,
+        duration: Number(formData.duration),
+        health: Number(formData.health),
+      };
+
+      const validationErrors = validateTraining(data);
+      
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+      }
+
+      addTraining(data);
+      cleanInputs();
+    },
+    [formData, addTraining, cleanInputs],
+  );
 
   return (
     <div className="formTrain">
       <h2>Новая тренировка</h2>
-      <form
-        action="submit"
-        className="training-form"
-        onSubmit={(e) => onHandleSubmit(e)}
-      >
+      <form className="training-form" onSubmit={onHandleSubmit}>
         <input
           type="text"
-          id="title"
+          name="title"
           placeholder="Название"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData.title}
+          onChange={handleChange}
           className={errors.title ? "warning" : ""}
         />
         <textarea
           name="description"
-          id="desc"
           placeholder="Описание"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formData.description}
+          onChange={handleChange}
           className={errors.description ? "warning" : ""}
-        >
-          {description}
-        </textarea>
+        />
         <input
           type="date"
-          placeholder="Дата"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
         />
         <input
           type="number"
+          name="duration"
           placeholder="Время тренировки"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
+          value={formData.duration}
+          onChange={handleChange}
           className={errors.duration ? "warning" : ""}
         />
         <select
           name="health"
-          id="health"
-          value={health}
-          onChange={(e) => setHealth(e.target.value)}
+          value={formData.health}
+          onChange={handleChange}
           className={errors.health ? "warning" : ""}
         >
           <option value="" hidden disabled>
             Самочувствие
           </option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
+          {[1, 2, 3, 4, 5].map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
         </select>
         <button type="submit" className="submit-button primary-button">
           <span>Отправить</span>

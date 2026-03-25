@@ -10,11 +10,12 @@ import {
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 import { buildHeatmapData } from "../../../utils/heatMap";
+import React, { useMemo } from "react";
 
-export function TrainingGraph() {
+function TrainingGraph() {
   const trainings = useSelector((state: RootState) => state.training.trainings);
 
-  const data = buildHeatmapData(trainings, 30);
+  const data = useMemo(() => buildHeatmapData(trainings, 30), [trainings]);
 
   return (
     <ResponsiveContainer width={600} height={300}>
@@ -49,3 +50,5 @@ export function TrainingGraph() {
     </ResponsiveContainer>
   );
 }
+
+export default React.memo(TrainingGraph);

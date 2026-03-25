@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Training, TrainingInput } from "../types";
+import { nanoid } from 'nanoid';
 
 export interface TrainingState {
   trainings: Training[];
@@ -15,7 +16,7 @@ export const trainingsSlice = createSlice({
   reducers: {
     addTraining: (state, action: PayloadAction<TrainingInput>) => {
       const train: Training = {
-        id: Date.now(),
+        id: Number(nanoid()),
         done: false,
         ...action.payload,
       };

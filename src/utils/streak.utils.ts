@@ -1,52 +1,40 @@
 import type { Training } from "../types";
 
-export const getBetweenDays = (
-  firstDate: number,
-  secondDate: number,
-): number => {
-  return (firstDate - secondDate) / 1000 / 60 / 60 / 24;
-};
+export const getBetweenDays = (firstDate: number, secondDate: number): number =>
+  (firstDate - secondDate) / (1000 * 60 * 60 * 24);
 
-export const startDay = (day: string): number => {
-  return new Date(day).setHours(0, 0, 0, 0);
-};
+export const startDay = (day: string): number =>
+  new Date(day).setHours(0, 0, 0, 0);
 
 export function streakInTrainings(trainings: Training[]): number {
-  let count: number = 0;
+  if (trainings.length === 0) return 0;
 
-  if (trainings.length === 0) return count;
-
-  const trainingsSorted: Training[] = [...trainings].sort(
+  const sorted = [...trainings].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 
-  const today: number = new Date().setHours(0, 0, 0, 0);
-  const last: number = new Date(
-    trainingsSorted[trainingsSorted.length - 1].date,
-  ).setHours(0, 0, 0, 0);
+  const today = new Date().setHours(0, 0, 0, 0);
+  let count = 0;
 
-  const betweenToday: number = getBetweenDays(today, last);
+  let lastDay = startDay(sorted[sorted.length - 1].date);
+  const diffFromToday = getBetweenDays(today, lastDay);
 
-  if (betweenToday === 0 || betweenToday === 1) {
+  if (diffFromToday === 0 || diffFromToday === 1) {
     count = 1;
   } else {
-    count = 0;
-    return count;
+    return 0;
   }
 
-  for (let i = trainingsSorted.length - 1; i > 0; i--) {
-    const lastDay: number = startDay(trainingsSorted[i].date);
-    const preLastDay: number = startDay(trainingsSorted[i - 1].date);
+  for (let i = sorted.length - 2; i >= 0; i--) {
+    const currentDay = startDay(sorted[i].date);
+    const daysBetween = getBetweenDays(lastDay, currentDay);
 
-    const betweenDays: number = getBetweenDays(lastDay, preLastDay);
+    if (daysBetween === 0) continue;
+    if (daysBetween === 1) count++;
+    else break;
 
-    if (betweenDays === 0) {
-      continue;
-    } else if (betweenDays === 1) {
-      count = count + 1;
-    } else {
-      break;
-    }
+    lastDay = currentDay;
   }
+
   return count;
 }

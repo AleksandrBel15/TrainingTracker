@@ -1,3 +1,4 @@
+import React from "react";
 import type { ModalViewProps } from "../../types";
 import "./Modal.css";
 
@@ -23,4 +24,4 @@ function ModalView({ training, setIsEditing, sklon }: ModalViewProps) {
   );
 }
 
-export default ModalView;
+export default React.memo(ModalView);

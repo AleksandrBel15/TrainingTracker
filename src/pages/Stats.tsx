@@ -1,5 +1,8 @@
-import { StatPage } from '../components/statistics/StatPage/StatPage.tsx';
+import React from "react";
+import StatPage from "../components/statistics/StatPage/StatPage.tsx";
 
-export function Stats() {
-    return <StatPage />
+function Stats() {
+  return <StatPage />;
 }
+
+export default React.memo(Stats);

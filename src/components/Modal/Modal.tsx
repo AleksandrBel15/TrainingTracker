@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import type { ModalProps } from "../../types";
-import "./Modal.css";
+import styles from "./Modal.module.css";
 import ModalView from "./ModalView";
 import ModalEdit from "./ModalEdit";
-import { sklon } from '../../utils/sklonFunc.ts';
+import { formatDays } from '../../utils/formatDays';
 
 function Modal({ training, onClose, onUpdate }: ModalProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -36,21 +36,21 @@ function Modal({ training, onClose, onUpdate }: ModalProps) {
   }, [onUpdate]);
 
   return (
-    <div className="overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-content">
+    <div className={styles["overlay"]} onClick={onClose}>
+      <div className={styles["modal"]} onClick={(e) => e.stopPropagation()}>
+        <div className={styles["modal-content"]}>
           {isEditing ? (
             <ModalEdit
               training={training}
               onCancel={handleCancelEditing}
               onSave={handleSave}
-              sklon={sklon}
+              formatDays={formatDays}
             />
           ) : (
             <ModalView
               training={training}
               setIsEditing={handleSetEditing}
-              sklon={sklon}
+              formatDays={formatDays}
             />
           )}
         </div>

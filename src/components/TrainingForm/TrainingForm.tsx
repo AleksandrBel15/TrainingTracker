@@ -1,10 +1,11 @@
 import { useState, useCallback } from "react";
-import type { TrainingInput, TrainingFormProps } from "../../types.ts";
+import type { TrainingInput, TrainingFormProps } from "../../types";
 import {
   validateTraining,
   type TrainingErrors,
 } from "../../utils/validateTraining.ts";
-import "./TrainingForm.css";
+import styles from "./TrainingForm.module.css";
+import cn from "classnames";
 
 function Form({ addTraining }: TrainingFormProps) {
   const [formData, setFormData] = useState({
@@ -51,7 +52,7 @@ function Form({ addTraining }: TrainingFormProps) {
       };
 
       const validationErrors = validateTraining(data);
-      
+
       if (Object.keys(validationErrors).length > 0) {
         setErrors(validationErrors);
         return;
@@ -64,23 +65,27 @@ function Form({ addTraining }: TrainingFormProps) {
   );
 
   return (
-    <div className="formTrain">
+    <div className={styles["formTrain"]}>
       <h2>Новая тренировка</h2>
-      <form className="training-form" onSubmit={onHandleSubmit}>
+      <form className={styles["training-form"]} onSubmit={onHandleSubmit}>
         <input
           type="text"
           name="title"
           placeholder="Название"
           value={formData.title}
           onChange={handleChange}
-          className={errors.title ? "warning" : ""}
+          className={cn({
+            [styles["warning"]]: errors.title,
+          })}
         />
         <textarea
           name="description"
           placeholder="Описание"
           value={formData.description}
           onChange={handleChange}
-          className={errors.description ? "warning" : ""}
+          className={cn({
+            [styles["warning"]]: errors.description,
+          })}
         />
         <input
           type="date"
@@ -94,13 +99,17 @@ function Form({ addTraining }: TrainingFormProps) {
           placeholder="Время тренировки"
           value={formData.duration}
           onChange={handleChange}
-          className={errors.duration ? "warning" : ""}
+          className={cn({
+            [styles["warning"]]: errors.duration,
+          })}
         />
         <select
           name="health"
           value={formData.health}
           onChange={handleChange}
-          className={errors.health ? "warning" : ""}
+          className={cn({
+            [styles["warning"]]: errors.health,
+          })}
         >
           <option value="" hidden disabled>
             Самочувствие
@@ -111,7 +120,10 @@ function Form({ addTraining }: TrainingFormProps) {
             </option>
           ))}
         </select>
-        <button type="submit" className="submit-button primary-button">
+        <button
+          type="submit"
+          className={cn(styles["submit-button"], styles["primary-button"])}
+        >
           <span>Отправить</span>
         </button>
       </form>

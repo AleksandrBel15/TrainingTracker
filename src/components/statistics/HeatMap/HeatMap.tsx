@@ -1,11 +1,16 @@
-import "./HeatMap.css";
+import styles from "./HeatMap.module.css";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
-import { buildHeatmapData } from "../../../utils/heatMap.ts";
+import { buildHeatmapData } from "../../../utils/heatMap";
 import React, { useMemo } from "react";
+import cn from 'classnames';
 
 function Square({ count }: { count: number }) {
-  const className = count > 0 ? "square square-blue" : "square square-gray";
+  
+  const className = cn(styles['square'], {
+    [styles['square-blue']]: count > 0,
+    [styles['square-gray']]: !(count > 0)
+  })
   return <div className={className}></div>;
 }
 
@@ -17,7 +22,7 @@ export function HeatMap() {
   const data = useMemo(() => buildHeatmapData(trainings, 120), [trainings]);
 
   return (
-    <div className="container-square">
+    <div className={styles["container-square"]}>
       {data.map((day) => (
         <MemoSquare key={day.date} count={day.count} />
       ))}

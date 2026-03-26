@@ -1,4 +1,4 @@
-export const sklon = (num: number): string => {
+export const formatDays = (num: number): string => {
     const lastNum: number = num % 100;
 
     if (lastNum >= 11 && lastNum <= 14) return "часов";

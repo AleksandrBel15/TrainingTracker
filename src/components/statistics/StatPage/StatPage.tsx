@@ -1,4 +1,4 @@
-import "./StatPage.css";
+import styles from "./StatPage.module.css";
 import React, { useMemo } from "react";
 import StatCard from "../StatCard/StatCard.tsx";
 import { TrainingCount } from "../TrainingCount/TrainingCount.tsx";
@@ -13,7 +13,7 @@ function StatPage() {
   const trainingGraphCard = useMemo(() => <TrainingGraph />, []);
 
   return (
-    <div className="page">
+    <div className={styles["page"]}>
       <StatCard title="Количество тренировок">{trainingCountCard}</StatCard>
       <StatCard title="Ударный режим">{streakCard}</StatCard>
       <StatCard title="Активность">{heatMapCard}</StatCard>

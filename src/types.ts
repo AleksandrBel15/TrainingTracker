@@ -38,11 +38,11 @@ export interface ModalProps extends OneTraining {
 
 export interface ModalViewProps extends OneTraining {
   setIsEditing: () => void;
-  sklon: (num: number) => string;
+  formatDays: (num: number) => string;
 }
 
 export interface ModalEditProps extends OneTraining {
   onCancel: () => void;
   onSave: (updated: Training) => void;
-  sklon: (num: number) => string;
+  formatDays: (num: number) => string;
 }

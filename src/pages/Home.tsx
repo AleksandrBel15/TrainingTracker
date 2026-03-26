@@ -12,6 +12,7 @@ import {
 } from "../store/trainings.slice";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
+import styles from '../App.module.css'
 
 export function Home() {
   const STORAGE_KEY = "trainings";
@@ -69,7 +70,7 @@ export function Home() {
 
   return (
     <>
-      <div className="layout">
+      <div className={styles["layout"]}>
         <Form addTraining={onAddTraining} />
 
         <List

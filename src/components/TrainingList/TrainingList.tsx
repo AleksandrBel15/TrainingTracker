@@ -1,11 +1,11 @@
 import React from "react";
 import type { TrainingListProps } from "../../types";
-import './TrainingList.css';
+import styles from './TrainingList.module.css';
 import Item from "../TrainingItem/TrainingItem";
 
 function List({ trainings, deleteTraining, onSelect }: TrainingListProps) {
   return (
-    <div className="training-list">
+    <div className={styles["training-list"]}>
       <h2>Список тренировок</h2>
 
       <div>

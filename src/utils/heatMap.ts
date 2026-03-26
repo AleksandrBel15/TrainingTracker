@@ -3,6 +3,14 @@ export interface HeatmapDay {
   count: number;
 };
 
+function getLocalDateKey(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 export function buildHeatmapData(
   trainings: { date: string }[],
   daysCount: number = 120
@@ -10,17 +18,16 @@ export function buildHeatmapData(
   const countMap = new Map<string, number>();
 
   trainings.forEach(({ date }) => {
-    const dayKey = new Date(date).toISOString().slice(0, 10);
+    const dayKey = getLocalDateKey(new Date(date));
     countMap.set(dayKey, (countMap.get(dayKey) || 0) + 1);
   });
 
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
 
   return Array.from({ length: daysCount }, (_, i) => {
     const date = new Date(today);
     date.setDate(today.getDate() - (daysCount - 1 - i));
-    const dayKey = date.toISOString().slice(0, 10);
+    const dayKey = getLocalDateKey(date);
 
     return {
       date: dayKey,

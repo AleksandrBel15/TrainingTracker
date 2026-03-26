@@ -1,19 +1,19 @@
 import React from "react";
 import type { TrainingItemProps } from "../../types";
-import "./TrainingItem.css";
+import styles from "./TrainingItem.module.css";
 
 function Item({ training, deleteTraining, onSelect }: TrainingItemProps) {
   const handleSelect = () => onSelect(training.id);
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation(); // чтобы клик по кнопке не срабатывал на родителя
+    e.stopPropagation(); 
     deleteTraining(training.id);
   };
 
   return (
-    <div className="training-item" onClick={handleSelect}>
-      <div className="training-title">{training.title}</div>
-      <div className="training-date">{training.date}</div>
-      <button className="delete-button" onClick={handleDelete}>
+    <div className={styles["training-item"]} onClick={handleSelect}>
+      <div className={styles["training-title"]}>{training.title}</div>
+      <div className={styles["training-date"]}>{training.date}</div>
+      <button className={styles["delete-button"]} onClick={handleDelete}>
         X
       </button>
     </div>

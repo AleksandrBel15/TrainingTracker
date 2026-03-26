@@ -1,12 +1,12 @@
-import "./App.css";
+import styles from "./App.module.css";
 import { BottomNav } from "./components/BottomNav/BottomNav";
 
 export function App() {
 
   return (
-    <div className="app-container">
+    <div className={styles["app-container"]}>
       <header>
-        <h1 className="app-title">
+        <h1 className={styles["app-title"]}>
           Трекер тренировок
         </h1>
       </header>

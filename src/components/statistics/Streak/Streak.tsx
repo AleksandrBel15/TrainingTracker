@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import "./Streak.css";
+import styles from "./Streak.module.css";
 import type { RootState } from "../../../store/store";
 import type { Training } from "../../../types";
 import React, { useMemo } from "react";
@@ -12,7 +12,7 @@ function Streak() {
 
   const streak = useMemo(() => streakInTrainings(trainings), [trainings]);
 
-  return <div className="card-streak">{ streak }</div>;
+  return <div className={styles["card-streak"]}>{streak}</div>;
 }
 
 export default React.memo(Streak);

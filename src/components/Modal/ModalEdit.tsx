@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import type { ModalEditProps, Training } from "../../types";
-import "./Modal.css";
+import styles from "./Modal.module.css";
+import cn from 'classnames';
 
-function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
+function ModalEdit({ training, onCancel, onSave, formatDays }: ModalEditProps) {
   const [draft, setDraft] = useState<Training>({
     id: training.id,
     done: training.done,
@@ -14,9 +15,9 @@ function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
   });
 
   return (
-    <div className="modal-inner">
-      <div className="head-modal">
-        <p className="modal-title">
+    <div className={styles["modal-inner"]}>
+      <div className={styles["head-modal"]}>
+        <p className={styles["modal-title"]}>
           Название:{" "}
           <input
             type="text"
@@ -24,7 +25,7 @@ function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
             onChange={(e) => setDraft({ ...draft, title: e.target.value })}
           />
         </p>
-        <p className="modal-date">
+        <p className={styles["modal-date"]}>
           <input
             type="date"
             value={draft.date}
@@ -32,7 +33,7 @@ function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
           />
         </p>
       </div>
-      <p className="modal-desc">
+      <p className={styles["modal-desc"]}>
         Описание: <br />
         <textarea
           id="edit-textarea"
@@ -49,7 +50,7 @@ function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
             setDraft({ ...draft, duration: Number(e.target.value) })
           }
         />{" "}
-        {sklon(Number(draft.duration))}
+        {formatDays(Number(draft.duration))}
       </p>
       <p>
         Самочувствие:{" "}
@@ -67,12 +68,12 @@ function ModalEdit({ training, onCancel, onSave, sklon }: ModalEditProps) {
         </select>
         /5
       </p>
-      <div className="bottom-modal">
-        <button className="edit-button edit-cancel-button" onClick={onCancel}>
+      <div className={styles["bottom-modal"]}>
+        <button className={cn(styles["edit-button"], styles["edit-cancel-button"])} onClick={onCancel}>
           Отмена
         </button>
         <button
-          className="edit-button edit-save-button"
+          className={cn(styles["edit-button"], styles["edit-cancel-button"])}
           onClick={() => {
             onSave(draft);
             onCancel();

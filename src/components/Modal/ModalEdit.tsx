@@ -18,7 +18,7 @@ function ModalEdit({ training, onCancel, onSave, formatDays }: ModalEditProps) {
     <div className={styles["modal-inner"]}>
       <div className={styles["head-modal"]}>
         <p className={styles["modal-title"]}>
-          Название:{" "}
+          {" "}
           <input
             type="text"
             value={draft.title}

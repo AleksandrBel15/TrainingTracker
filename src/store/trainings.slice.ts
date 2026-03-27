@@ -1,6 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Training, TrainingInput } from "../types";
-import { nanoid } from 'nanoid';
 
 export interface TrainingState {
   trainings: Training[];
@@ -16,10 +15,14 @@ export const trainingsSlice = createSlice({
   reducers: {
     addTraining: (state, action: PayloadAction<TrainingInput>) => {
       const train: Training = {
-        id: Number(nanoid()),
+        id: Date.now(),
         done: false,
         ...action.payload,
       };
+
+      if (isNaN(train.id) || !train.id) {
+        throw new Error('Invalid ID');
+      }
 
       state.trainings.push(train);
     },

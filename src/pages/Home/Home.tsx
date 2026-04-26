@@ -1,24 +1,26 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Modal from "../components/Modal/Modal";
-import Form from "../components/TrainingForm/TrainingForm";
-import List from "../components/TrainingList/TrainingList";
-import type { Training, TrainingInput } from "../types";
+import { useCallback, useMemo, useState, type JSX } from "react";
+import Modal from "../../components/Modal/Modal";
+import Form from "../../components/TrainingForm/TrainingForm";
+import List from "../../components/TrainingList/TrainingList";
+import type { Training, TrainingInput } from "../../types";
 import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../store/store";
+import type { AppDispatch } from "../../store/store";
 import {
   addTraining,
   removeTraining,
   updateTraining,
-} from "../store/trainings.slice";
+} from "../../store/trainings.slice";
 import { useSelector } from "react-redux";
-import type { RootState } from "../store/store";
-import styles from '../App.module.css'
+import type { RootState } from "../../store/store";
+import styles from "../../App.module.css";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { BottomSheet } from "./BottomSheet/BottomSheet.tsx";
 
-export function Home() {
-  const STORAGE_KEY = "trainings";
-
+export function Home(): JSX.Element {
   const trainings = useSelector((state: RootState) => state.training.trainings);
   const dispatch = useDispatch<AppDispatch>();
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const [isOpen, setIsOpen] = useState(false);
 
   const onUpdate = (updated: Training): void => {
     dispatch(updateTraining(updated));
@@ -32,17 +34,12 @@ export function Home() {
     dispatch(addTraining(data));
   };
 
-  const deleteTraining = useCallback((id: number): void => {
-    dispatch(removeTraining(id));
-  }, [dispatch]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(trainings));
-    } catch (e) {
-      console.error("Ошибка сохранения в localStorage", e);
-    }
-  }, [trainings]);
+  const deleteTraining = useCallback(
+    (id: number): void => {
+      dispatch(removeTraining(id));
+    },
+    [dispatch],
+  );
 
   const onSelect = useCallback((id: number): void => {
     setSelectedTrainingId(id);
@@ -71,7 +68,19 @@ export function Home() {
   return (
     <>
       <div className={styles["layout"]}>
-        <Form addTraining={onAddTraining} />
+        {!isMobile ? (
+          <Form addTraining={onAddTraining} />
+        ) : (
+          <>
+            <button className={styles.buttonAddTrain} onClick={() => setIsOpen(true)}>Добавить тренировку</button>
+
+            {isOpen && (
+              <BottomSheet onClose={() => setIsOpen(false)}>
+                <Form addTraining={onAddTraining} />
+              </BottomSheet>
+            )}
+          </>
+        )}
 
         <List
           trainings={trainingsSorted}

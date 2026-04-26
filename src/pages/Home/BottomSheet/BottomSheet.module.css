@@ -1,0 +1,51 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+
+  padding: 16px;
+  max-height: 92vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+
+  z-index: 3000;
+
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+.handle {
+  width: 40px;
+  height: 4px;
+  background: #ccc;
+  border-radius: 2px;
+
+  margin: 0 auto 12px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 420px) {
+  .sheet {
+    padding: 14px 14px calc(env(safe-area-inset-bottom) + 18px);
+  }
+}
+

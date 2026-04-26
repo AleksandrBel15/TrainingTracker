@@ -20,12 +20,13 @@
   border-radius: 20px;
   overflow: hidden;
 
-  height: 80vh;
-  min-width: 650px;
-  max-width: 800px;
-
+  width: min(95vw, 760px);
+  max-width: 760px;
+  min-height: 68vh;
+  max-height: 96vh;
   padding: 6px;
   box-sizing: border-box;
+  margin: 0 16px;
 
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.15),
@@ -39,9 +40,9 @@
   min-height: 0;
   overflow-y: auto;
   width: 100%;
+  max-height: calc(96vh - 20px);
 }
 
-/* красивый скролл */
 .modal-content::-webkit-scrollbar {
   width: 6px;
 }
@@ -65,18 +66,54 @@
   color: #1f2937;
 }
 
-.modal-title {
-  font-size: 22px;
+.modal-title-input,
+.modal-date-input,
+.health-select,
+.small-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-title-input {
+  font-size: 21px;
+  font-weight: 700;
+  padding: 14px 16px;
+}
+
+.modal-date-input {
+  max-width: 240px;
+}
+
+.modal-label,
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #4b5563;
   font-weight: 600;
 }
 
-.modal-date {
-  color: #6b7280;
-  font-size: 14px;
+.date-row,
+.field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.small-input {
+  max-width: 120px;
 }
 
 .modal-desc {
   margin-top: 20px;
+  width: 100%;
+  min-height: 180px;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   color: #374151;
@@ -97,7 +134,16 @@
   padding-top: 20px;
 }
 
-/* ===== КНОПКИ ===== */
+@media (max-width: 640px) {
+  .modal-inner {
+    padding: 20px;
+  }
+
+  .bottom-modal {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
 
 .edit-button {
   height: 42px;
@@ -125,14 +171,12 @@
   transform: translateY(0);
 }
 
-/* Отмена */
 .edit-button.edit-cancel-button:hover {
   background: #ef4444;
   border-color: #ef4444;
   color: white;
 }
 
-/* Сохранить */
 .edit-button.edit-save-button {
   background: #2563eb;
   color: white;
@@ -142,8 +186,6 @@
 .edit-button.edit-save-button:hover {
   background: #1d4ed8;
 }
-
-/* ===== INPUTS ===== */
 
 .modal-inner input,
 .modal-inner textarea,
@@ -160,6 +202,38 @@
   transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
+.modal-inner textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+}
+
+.field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.health-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.health-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 66px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  color: white;
+}
+
 .modal-inner input:focus,
 .modal-inner textarea:focus,
 .modal-inner select:focus {
@@ -172,8 +246,6 @@
   min-height: 120px;
   resize: vertical;
 }
-
-/* ===== TEXTAREA В РЕДАКТИРОВАНИИ ===== */
 
 #edit-textarea {
   width: 100%;

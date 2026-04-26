@@ -1,12 +1,16 @@
 .container-square {
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
+  grid-template-columns: repeat(15, minmax(10px, 1fr));
   gap: 4px;
+  width: 100%;
+  justify-items: center;
 }
 
 .square {
-  width: 16px;
-  height: 16px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 22px;
+  min-width: 10px;
   border-radius: 2px;
 }
 
@@ -17,3 +21,11 @@
 .square-blue {
   background-color: #3b82f6;
 }
+
+@media (max-width: 640px) {
+  .container-square {
+    gap: 3px;
+  }
+}
+ 
+

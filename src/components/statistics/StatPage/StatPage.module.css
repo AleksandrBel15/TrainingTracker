@@ -1,9 +1,19 @@
 .page {
   display: grid;
-  grid-template-columns: 1fr 1fr;   
-  grid-template-rows: 1fr 1fr;      
-  gap: 20px;                        
-  height: 100vh;                    
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  min-height: auto;
   padding: 20px;
   box-sizing: border-box;
+
+  margin: 0 auto;
+  grid-auto-rows: minmax(min-content, max-content);
+}
+
+@media (max-width: 640px) {
+  .page {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
 }

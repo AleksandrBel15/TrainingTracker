@@ -18,11 +18,12 @@ function TrainingGraph() {
   const data = useMemo(() => buildHeatmapData(trainings, 30), [trainings]);
 
   return (
-    <ResponsiveContainer width={600} height={300}>
-      <LineChart
-        data={data}
-        margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-      >
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <ResponsiveContainer width="100%" height={200}>
+        <LineChart
+          data={data}
+          margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+        >
         <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
 
         <XAxis
@@ -31,7 +32,7 @@ function TrainingGraph() {
           tick={{ fontSize: 12 }}
         />
 
-        <YAxis allowDecimals={false} />
+        <YAxis allowDecimals={false} domain={[0, 3]} />
 
         <Tooltip
           labelFormatter={(value) => `Дата: ${value}`}
@@ -47,7 +48,8 @@ function TrainingGraph() {
           activeDot={{ r: 6 }}
         />
       </LineChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }
 

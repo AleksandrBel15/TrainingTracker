@@ -1,5 +1,5 @@
 .card-streak {
-  font-size: 72px;
+  font-size: clamp(48px, 7vw, 72px);
   font-weight: 700;
   background: linear-gradient(135deg, #ff6a00, #ff3c00, #ffb347, #ff6a00);
   background-size: 200% 100%;
@@ -13,6 +13,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
   cursor: default;
 }
 

@@ -1,20 +1,22 @@
 .training-form {
   background: #ffffff;
-  padding: 24px;
+  padding: 22px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
 }
 
 .training-form h2 {
   margin-top: 0;
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: clamp(18px, 2vw, 22px);
 }
 
 .training-form textarea {
   resize: vertical;
-  min-height: 30vh;
-  max-height: 30vh; 
+  min-height: 180px;
+  max-height: 32vh;
   overflow-y: auto;
 }
 
@@ -40,11 +42,12 @@
 
 .training-form button {
   width: 100%;
-  padding: 12px;
+  padding: 14px 16px;
   border: none;
   border-radius: 10px;
   background-color: #2563eb;
   color: white;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;
@@ -58,5 +61,11 @@
   outline: none;
   border-color: red;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+@media (max-width: 480px) {
+  .training-form {
+    padding: 18px;
+  }
 }
 
